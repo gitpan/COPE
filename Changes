@@ -1,0 +1,48 @@
+Changes for COPE
+
+from 0.03 to 0.04
+
+    * Most of these changes are
+      From: "Irving Reid" <irving@tor.securecomputing.com>
+      Subject: Some patches for COPE 0.03
+      Message-Id: <97Jul24.000815edt.11660@janus.tor.securecomputing.com>
+    * use COPE::CORBA::Exception, implemented CORBA::SystemException and
+      CORBA::UserException
+    * Allow the user to specify the listen port in a command line argument,
+      find an unused port otherwise
+    * Detect and handle disconnecting clients
+    * Throw CORBA::MARSHAL SystemException if a struct being marshalled is
+      missing a field
+    * Unmarshal booleans
+
+from 0.02 to 0.03
+
+    * first stab at CosNaming
+    * fixed passing of Objects, needed for naming
+    * custom announcer to solve the IOR-of-NamingService chicken and egg
+      problem
+    * Servers are now non-forking so object factories now create objects
+      in the same process
+    * Keep index and data so we don't reallign
+      From: Kirby Koster 
+      Message-Id: <199705200348.WAA04582@tamahduh.sctc.com>
+      Subject: COPE incompatibility with orbixweb
+    * idl2perl now needs --impl to generate sample server code
+
+from 0.01 to 0.02
+
+    * port_number is a ushort
+    * fixed endianness tricks
+
+from cope.tar.gz to COPE-0.01
+
+    * complete reorganization of directory layout
+    * Added Makefile.PL
+    * renamed lots of files
+    * compiler now starts irserv by itself
+
+
+$Id: Changes,v 1.4 1997/07/31 14:54:52 schuller Exp $
+Copyright (c) 1997 Lunatech Research / Bart Schuller <schuller@lunatech.com>
+See the file "Artistic" in the distribution for licensing and
+(lack of) warranties.

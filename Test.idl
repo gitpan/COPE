@@ -1,0 +1,61 @@
+/* $Id: Test.idl,v 1.1.1.1 1997/05/17 11:47:05 schuller Exp $
+ Copyright (c) 1997 Lunatech Research / Bart Schuller <schuller@lunatech.com>
+ See the file "Artistic" in the distribution for licensing and
+ (lack of) warranties.
+*/
+
+#pragma prefix "smop.org"
+
+module Test {
+    struct TestStruct {
+        string  astring;
+        short   ashort;
+    };
+
+    interface Test2 {
+        string check();
+        exception AnException {
+            string why;
+            short  minor;
+        };
+        void etest()
+             raises(AnException);
+        void help_brother(inout long counter, in Test2 my_brother);
+        // not tested, yet
+
+        attribute string anattr;
+        readonly attribute long count;
+        const string NAME = "Bart";
+        const short AGE = 28;
+    };
+
+    interface Test1 {
+        typedef sequence<long> LongSeq;
+        typedef sequence<octet> OctetSeq;
+        typedef short ShortArray [4];
+    
+        long in_long(in long along);
+        string in_string(in string astring);
+        LongSeq in_long_sequence(in LongSeq asequence);
+        OctetSeq in_octet_sequence(in OctetSeq asequence);
+        TestStruct in_struct(in TestStruct astruct);
+        ShortArray in_array(in ShortArray anarray);
+    
+        void inout_long(inout long along);
+        void inout_string(inout string astring);
+        void inout_long_sequence(inout LongSeq asequence);
+        void inout_octet_sequence(inout OctetSeq asequence);
+        void inout_struct(inout TestStruct astruct);
+        void inout_array(inout ShortArray anarray);
+    
+        void out_long(out long along);
+        void out_string(out string astring);
+        void out_long_sequence(out LongSeq asequence);
+        void out_octet_sequence(out OctetSeq asequence);
+        void out_struct(out TestStruct astruct);
+        void out_array(out ShortArray anarray);
+    
+        Test2 ret_object();
+    };
+    
+};

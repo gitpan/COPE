@@ -1,0 +1,175 @@
+=head1 NAME
+
+COPE - CORBA implemented in Perl
+
+=head1 DESCRIPTION
+
+This documents describes the steps you take when writing a CORBA application
+in Perl using COPE.
+
+First the basics: the laguage binding used.
+
+=head2 Scalar types
+
+=over 4
+
+=item char
+
+The C<char> type is represented as a 1-character perl string, like 'a'.
+
+=item octet
+
+C<octet> is represented as a perl number, like 200. We could equally well
+make C<octet> be exactly the same as C<char>.
+
+=item Integer types
+
+C<long> and C<short> are no problem. C<unsigned long> might internally be
+stored as a C<double>, but that should be invisible.
+
+=item Floating-Point types
+
+Perl has those as well.
+
+=back
+
+=head2 Structures
+
+Structures are represented as blessed hashreferences. They inherit from
+CORBA::_Struct which implements a generic constructor called C<new>, taking
+key,value pairs.
+
+An example:
+
+    #   struct MyStruct { // IDL
+    #       boolean             simple;
+    #       sequence <octet>    list;
+    #   }
+    package MyStruct;
+    @ISA=qw(CORBA::_Struct);
+    
+    my $structvar = new MyStruct( simple => 1, list => [0,1,2] );
+
+Every structure also has a TypeCode defined called C<_tc> (in the appropriate
+package). In the example case, the typecode would be called $MyStruct::_tc
+
+=head2 Sequences
+
+A sequence is represented as an unblessed array reference, with one
+exception:
+
+B<octet sequences> are represented as a perl string, because they tend
+to be used for I<blob>-like data.
+
+=head2 Arrays
+
+Are also represented as unblessed array references, also with one exception:
+B<char arrays>, which are again perl strings.
+
+What do people think of these exceptions to the rules?
+
+=head2 Enumerations
+
+Are subs with an empty prototype, declared in the appropriate package.
+
+=head2 Strings
+
+Are plain scalars.
+
+=head2 Unions
+
+I haven't looked at them yet (haven't needed them either)
+
+=head2 Objects
+
+Are Perl objects (blessed references)
+
+=head2 TypeCodes
+
+Are Perl objects
+
+=head2 Interfaces
+
+Are Perl classes. This means a package and an @ISA array.
+
+=head2 Operations
+
+Are Perl methods
+
+=head2 Any
+
+Will be a Perl object.
+
+=head2 Exceptions
+
+Are Perl classes inheriting from Experimental::Exception
+
+=head2 Attributes
+
+I now favour the choice the Java people have made: a method taking zero or
+one extra arguments, for getting or setting the attribute. This looks the
+most readable to me.
+
+=head2 Parameter passing
+
+=over 4
+
+=item in
+
+All types are already scalar in nature, so can be passed as-is. The number
+of arguments to a method are always exactly as in the IDL.
+
+=item inout
+
+All non-reference types (numbers and strings) need to be fitted with a \
+and can't be literals.
+
+=item out
+
+Same as for inout. I<note:> You need to supply an empty anonymous array or
+hash for sequences, structs or arrays.
+
+Objects need a scalar reference.
+
+=back
+
+=head2 Working with TypeCodes
+
+The TypeCodes for basic types are predefined and have names like
+$CORBA::_tc_boolean
+All non-basic types have their TypeCode stored in $package::_tc
+Custom TypeCodes can be built using functions like _create_struct_tc()
+
+=head2 Server side
+
+When implementing a server, we need three logically seperate classes:
+
+=over 4
+
+=item The implementation of your object
+
+This could be an existing class which you decide to give a shiny new
+CORBA wrapper
+
+=item A generated Skeleton class
+
+This is what gets called by the ORB. It is responsible for decoding method
+arguments and calling the method
+
+=item A mapping class
+
+The Mapping class provides the mapping between I<known> method names the
+skeleton class uses and the possibly I<unknown> names in your implementation
+class.
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (c) 1997 Lunatech Research / Bart Schuller <schuller@lunatech.com>
+See the file "Artistic" in the distribution for licensing and
+(lack of) warranties.
+
+=cut
+
+# $Id: COPE.pod,v 1.2 1997/06/19 14:34:30 schuller Exp $

@@ -1,0 +1,38 @@
+TODO file for COPE, in strictly random order.
+
+Implement the POA
+
+Environment variable for the UDP broadcaster port
+
+there are object leaks in the BOA; when an object is removed from the BOA, we
+don't take it out of the implementation/skeleton hash table.  That means the
+memory is never freed (and the object destructors aren't called).
+
+Write still more tests
+
+Write lots of documentation
+
+Add all cases to the marshalling routines instead of the current "on demand"
+approach.
+
+Finish the NamingService
+
+Write our own IR (and all of COSS, of course)
+
+Review the name and module hierarchy
+
+Add a proper Any type
+
+Figure out the proper interface for the Dynamic Skeleton Interface (probably
+not much work)
+
+Review design
+
+Implement Unions
+
+Do a dependency analysis for the generated types
+
+$Id: TODO,v 1.5 1997/07/31 14:54:52 schuller Exp $
+Copyright (c) 1997 Lunatech Research / Bart Schuller <schuller@lunatech.com>
+See the file "Artistic" in the distribution for licensing and
+(lack of) warranties.

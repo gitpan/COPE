@@ -1,0 +1,48 @@
+COPE - CORBA meets Perl
+
+Here then is another alpha release of COPE as a Perl module. It is very
+much a work in progress and not really intended for useful work.
+However, if you would like to use Perl to script CORBA objects, you might
+want to try this out and let me know what works and what doesn't.
+
+Discussion, questions, etc: see http://www.lunatech.com/cope/ for details
+about the mailinglist.
+
+I'd also like to hear what you think of the choices I've made in my
+language mapping.
+
+
+    "Installation" instructions
+
+To try out the test scripts, you'll need Perl version 5.004 or one of the
+5.003_xx betas. I don't know exactly what value xx should have, but I
+recommend 5.004 (or better 5.004_0x) anyway.
+
+COPE uses one tiny part of the libnet package, so you'll need that as well.
+The Exceptions make use of Experimental::Exception by Torsten Ekedahl.
+I've placed Exception-0.95.tar.gz next to this archive on the www site.
+
+If you want to compile your own IDL files, you'll also need an interface-
+repository. The idl2perl script is hardwired to call irserv from OmniBroker.
+
+After you've unpacked COPE-0.0x.tar.gz, simply do something like
+
+    perl Makefile.PL
+    make
+    make test
+    sudo make install
+
+The test scripts are probably the most interesting at the moment. See
+t/base.pl and t/COPE/Test_impl.pm together with Test.idl .
+The CosNaming module is another example.
+
+The biggest client application is idl2perl, the IDL to Perl compiler. It
+starts the OmniBroker IR (see www.ooc.com) on the file IR.idl .
+The compiler writes four files for every object it finds in the contents
+of the Repository object to the directory "out".
+
+
+$Id: README,v 1.2 1997/06/19 15:06:32 schuller Exp $
+Copyright (c) 1997 Lunatech Research / Bart Schuller <schuller@lunatech.com>
+See the file "Artistic" in the distribution for licensing and
+(lack of) warranties.
